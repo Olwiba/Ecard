@@ -1,0 +1,135 @@
+// Breakpoints
+// 
+// Breakpoints used to change how content is displayed at various screen sizes
+// 
+// .break-sm - 320px
+// .break-md - 768px
+// .break-lg - 1024px
+// .break-xl - 1200px
+// .break-xxl - 1440px
+// .break-xxxl - 1800px
+//
+// These can be used as both variables or `@include break-sm` mixins.
+//
+// Styleguide global.breakpoints
+
+$break-sm: calc-em(320px);
+$break-md: calc-em(640px);
+$break-lg: calc-em(1024px);
+$break-xl: calc-em(1200px);
+$break-xxl: calc-em(1440px);
+$break-xxxl: calc-em(1800px);
+
+// Small Screens
+@mixin break-sm {
+	@media screen and (max-width: #{$break-md - .01em}) {
+		@content;
+	}
+}
+
+// Medium Screens
+@mixin break-md {
+	@media screen and (min-width: #{$break-md}) {
+		@content;
+	}
+}
+
+@mixin break-md-down {
+	@media screen and (max-width: #{$break-lg} - 0.01em) {
+		@content;
+	}
+}
+
+@mixin break-md-only {
+  @media screen and (min-width: #{$break-md}) and (max-width: #{$break-lg} - 0.01em) {
+    @content;
+  }
+}
+
+
+// Large Screens
+@mixin break-lg {
+	@media screen and (min-width: #{$break-lg}) {
+		@content;
+	}
+}
+
+@mixin break-lg-only {
+  @media screen and (min-width: #{$break-lg}) and (max-width: #{$break-xl} - 0.01em) {
+    @content;
+  }
+}
+
+// Extra Large Screens
+@mixin break-xl {
+	@media screen and (min-width: #{$break-xl}) {
+		@content;
+	}
+}
+
+
+@mixin break-xxl {
+  @media all and (min-width: #{$break-xxl}) {
+    @content;
+  }
+}
+
+@mixin break-xxxl {
+  @media all and (min-width: #{$break-xxxl}) {
+    @content;
+  }
+}
+
+// Retina screens
+// 
+// Used to apply styles for retina screens
+// 
+// Example:
+// .image {
+//   //default styles for element
+//   @include retina() {
+//     // styles to be applied if viewed on retina screens
+//   }
+// }
+//
+// Hide / Show on retina (class)
+// 
+// Used to hide/show markup on retina screens
+//
+// Example: 
+// <div class="show-for-retina">
+//   // retina content goes here
+//   <img src="/link/to/image--retina.png" />
+// </div>
+// <div class="hide-for-retina">
+//   // content to hide on retina
+//   <img src="/link/to/normal-image.png" />
+// </div>
+//
+// Styleguide global.retina-screens
+
+// need to keep manual prefixes as autoprefixer doesn't support min-device-pixel-ratio :(
+@mixin retina {
+	@media only screen and (min--moz-device-pixel-ratio: 2),
+    only screen and (-o-min-device-pixel-ratio: 2/1),
+    only screen and (-webkit-min-device-pixel-ratio: 2),
+    only screen and (min-device-pixel-ratio: 2) {
+		@content;
+	}
+}
+
+.show-for-retina {
+  display: none;
+
+  @include retina() {
+    display: inherit;
+  }
+}
+
+.hide-for-retina {
+  display: inherit;
+
+  @include retina() {
+    display: none;
+  }
+}
