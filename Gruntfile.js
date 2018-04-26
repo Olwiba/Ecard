@@ -35,9 +35,12 @@ module.exports = function (grunt) {
     },
     // Configure sass
     sass: {
+      options: {
+          sourceMap: true
+      },
       dist: {
         files: {
-          'src/css/style.css': 'src/sass/*.scss'
+          'src/css/style.css': 'src/sass/screen.scss'
         }
       }
     },
@@ -77,9 +80,11 @@ module.exports = function (grunt) {
   // make sure you have run npm install so our app can find these
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-sass');
+  //grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-sass');
 
   grunt.registerTask('default', ['jshint', 'uglify', 'sass', 'cssmin']);
+  grunt.registerTask('dev', ['jshint', 'uglify', 'sass', 'cssmin', 'watch']);
 };
