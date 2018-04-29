@@ -1,6 +1,7 @@
 html,
 body {
     width: 100%;
+    min-width: 340px;
     height: 100%;
     overflow: hidden;
 }
@@ -11,19 +12,17 @@ footer {
     position: relative;
     z-index: 2;
     pointer-events: none;
-}
-
-header {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
+    min-width: 340px;
 }
 
 main {
     position: relative;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translateY(calc(-50% - 120px));
+
+    @include break-lg() {
+        transform: translateY(-50%);
+    }
 }
 
 footer {
@@ -51,6 +50,7 @@ $overlayOpacity: 0.3;
         left: 0;
         right: 0;
         width: 100%;
+        min-width: 340px;
         height: 100%;
         background: linear-gradient(to top, rgba(183, 33, 255, $overlayOpacity), rgba(33, 212, 253, $overlayOpacity));
     }
@@ -67,70 +67,56 @@ $overlayOpacity: 0.3;
 
 // Header
 header {
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
     width: 100%;
     max-width: 1500px;
     margin: 0 auto;
-    padding: 50px 100px 0;
+    padding: 16px 8px 0;
+
+    @include break-lg() {
+        position: absolute;
+        padding: 0;
+    }
 }
 
 .logo {
-    width: 150px;
-    height: 150px;
+    width: 100px;
+    height: 100px;
 
-    // .logo__letter-o
-    &__letter-o {
-        //filter:url(#O);
-        //animation: logoFlickerO 2s linear infinite;
-        //will-change: transform;
-    }
-
-    // .logo__letter-b
-    &__letter-b {
-        //filter:url(#B);
-        //animation: logoFlickerB 1.5s .5s linear infinite;
-        //will-change: transform;
+    @include break-lg() {
+        width: 150px;
+        height: 150px;
     }
 }
-
-// @keyframes logoFlickerO {
-//     0% {filter: url(#O);}
-//     50% {filter: none;}
-//     88% {filter: url(#O);}
-//     90% {filter: none;}
-//     100% {filter: url(#O);}    
-// }
-
-// @keyframes logoFlickerB {
-//     0% {filter: url(#B);}
-//     50% {filter: none;}
-//     88% {filter: url(#B);}
-//     90% {filter: none;}
-//     100% {filter: url(#B);}    
-// }
 
 // Main
 .content {
     text-align: center;
+    padding: 0 16px;
 
     //.content__title
     &__title {
         font-family: 'Permanent Marker', cursive;
-        font-size: 12vh;
+        font-size: 64px;
         color: #FFEEEE;
         text-shadow: -6px 0 14px #21d4fd, 0 5px 3px #000;
         margin: 0 0 24px;
 
+        @include break-lg() {
+            font-size: 12vh;
+        }
+
         & span {
-            //animation: blink 2s linear 650ms infinite alternate;
             animation: glow 4s linear 650ms infinite alternate;
 
-            &:nth-child(2n+0) {
-                //animation: blink 2.4s linear 1.35s infinite alternate;                
+            &:nth-child(2n+0) {            
                 animation: glow 4.4s linear 1.35s infinite alternate;                
             }
 
-            &:nth-child(3n+0) {
-                //animation: blink 2.2s linear 950ms infinite alternate;                
+            &:nth-child(3n+0) {            
                 animation: glow 4.2s linear 950ms infinite alternate;                
             }
         }
@@ -139,10 +125,14 @@ header {
     //.content__subheading
     &__subheading {
         font-family: 'Permanent Marker', cursive;
-        font-size: 7vh;
+        font-size: 48px;
         color: #FFEEEE;
         text-shadow: -6px 0 14px #21d4fd, 0 5px 3px #000;
         margin: 0 0 24px;
+
+        @include break-lg() {
+            font-size: 7vh;
+        }
 
         & span {
             animation: blink 2s linear 650ms infinite alternate;
@@ -202,36 +192,45 @@ header {
     }
 }
 
-// Links
 .links {
-    display: inline-block;
+    display: block;
     width: 100%;
+    overflow-x: auto;
+    pointer-events: auto;
+    white-space: nowrap;
     margin: 0 auto;
     padding: 0;
     text-align: center;
 
+    @include break-lg() {
+        display: inline-block;
+        pointer-events: none;
+        overflow: inherit;
+    }
+
     // .links__link
     &__link {
         display: inline-block;
-        width: 100px;
-        height: 100px;
-        margin-left: 16px;
+        width: 80px;
+        height: 80px;
+        margin-left: 8px;
         transition: transform 100ms ease-out;
 
         &:nth-child(1) {
             margin-left: 0;
         }
-    }
 
-    a {
-
+        @include break-lg() {
+            width: 100px;
+            height: 100px;
+            margin-left: 16px;            
+        }
     }
 }
 
 .link-helptip {
     position: relative;
     
-
     // .link-helptip__icon
     &__icon {
         width: 100%;
@@ -252,6 +251,11 @@ header {
                 visibility: visible;
                 opacity: 1;
             }
+        }
+
+        // .link-helptip__icon--locked
+        &--locked {
+            cursor: not-allowed;
         }
     }
 
@@ -286,7 +290,6 @@ header {
         width: auto;
         padding: 8px 16px;
         background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0.8) 100%);
-        //border: 2px linear #21d4fd;
         border-width: 2px;
         border-style: solid;
         border-image: linear-gradient(to top, #21d4fd, transparent 40%, transparent 60%, #21d4fd 100%) 1;
@@ -297,10 +300,6 @@ header {
         color: #FFEEEE;
         text-align: center;
         transform: translateX(calc(-50% + 8px));
-    
-        @include break-lg() {
-            width: calc(100% - 24px);
-        }
     }
 }
 
@@ -310,16 +309,71 @@ header {
     visibility: visible;
 }
 
+.scroll-arrows {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 16px;
+    color: #FFEEEE;
+    text-shadow: -6px 0 14px #21d4fd, 0 5px 3px #000;
+
+    @media screen and (min-width: 680px) {
+        display: none;
+    }
+
+    // .scroll-arrows__left
+    &__left {
+        float: left;
+        margin-left: 16px;
+    }
+
+    // .scroll-arrows__right
+    &__right {
+        float: right;
+        margin-right: 16px;
+    }
+}
+
+.location {
+    display: table;
+    margin: 0 auto;
+    padding: 0;
+    transform: translateX(-10px);
+
+    // .location__icon
+    &__icon {
+        display: inline-block;
+        float: left;
+        width: 60px;
+        height: 60px;
+    }
+
+    // .location__passage
+    &__passage {
+        display: inline-block;
+        float: right;
+        font-family: 'Permanent Marker', cursive;
+        font-size: 24px;
+        line-height: 60px;
+        margin: 0;
+        color: #FFEEEE;
+        text-shadow: -6px 0 14px #21d4fd, 0 5px 3px #000;
+    }
+}
+
 // Footer
 .footer-text {
     font-family: 'Source Sans Pro', sans-serif;
     font-size: 16px;
     color: #FFEEEE;
+    padding: 0 16px;
 
-    a {
+    & a {
         color: #21d4fd;
         pointer-events: auto;
         cursor: pointer;
+    }
+
+    & span {
+        padding: 0 8px;
     }
 }
 
@@ -328,6 +382,7 @@ header {
 #particles-js{
     position: absolute;
     width: 100%;
+    min-width: 340px;
     height: 100%;
     top: 0;
     left: 0;
