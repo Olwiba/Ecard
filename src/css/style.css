@@ -544,6 +544,9 @@ header {
   margin: 0 auto;
   padding: 0;
   transform: translateX(-10px); }
+  @media screen and (min-width: 1024px) {
+    .location {
+      transform: translateX(-40px); } }
   .location__icon {
     display: inline-block;
     float: left;
