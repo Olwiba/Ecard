@@ -338,6 +338,10 @@ header {
     padding: 0;
     transform: translateX(-10px);
 
+    @include break-lg() {
+        transform: translateX(-40px);
+    }
+
     // .location__icon
     &__icon {
         display: inline-block;
